@@ -27,21 +27,21 @@ class SideNav extends Component {
     return (
       <div className="col-2 p-2 bg-light ">
         <a
-          className={this.selectedStyle(this.state.selected == "users")}
+          className={this.selectedStyle(this.state.selected === "users")}
           href="#"
           onClick={() => this.setSelected("users")}
         >
           Users
         </a>
         <a
-          className={this.selectedStyle(this.state.selected == "records")}
+          className={this.selectedStyle(this.state.selected === "records")}
           href="#/records"
           onClick={() => this.setSelected("records")}
         >
           Records
         </a>
         <a
-          className={this.selectedStyle(this.state.selected == "settings")}
+          className={this.selectedStyle(this.state.selected === "settings")}
           href="#/settings"
           onClick={() => this.setSelected("settings")}
         >
