@@ -2,22 +2,22 @@ import * as userActions from "../constants/types";
 
 const initialState = {
   id: "",
-  user: {
+  item: {
     name: "",
     phone: "",
     email: ""
   },
-  users: []
+  items: []
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case userActions.ADD_NEW_USER:
-      state.user = action.payload;
+      state.item = action.payload;
       break;
 
     case userActions.FETCH_USERS:
-      state.users = action.payload;
+      state.items = action.payload;
       break;
 
     default:

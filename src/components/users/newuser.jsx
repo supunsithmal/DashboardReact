@@ -4,44 +4,21 @@ import { showNewUserDialog } from "../../actions/ui-actions";
 import { addUser } from "../../actions/user-actions";
 
 class NewUser extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-      phone: "",
-      email: ""
-    };
-  }
-
   dismissDialog() {
     console.log("Dismissing dialog");
     this.props.showNewUserDialog(false);
   }
 
   saveUserDetails() {
-    this.props.addUser({
-      name: this.state.name,
-      phone: this.state.phone,
-      email: this.state.email
-    });
-
     const user = {
       name: this.state.name,
       phone: this.state.phone,
       email: this.state.email
     };
-
-    fetch("https://jsonplaceholder.typicode.com/users", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json"
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      });
+    this.props.showNewUserDialog(false);
+    this.props.addUser({
+      user: user
+    });
   }
 
   render() {

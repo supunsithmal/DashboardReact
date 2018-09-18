@@ -1,23 +1,24 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import NewUser from "./users/newuser";
 import { connect } from "react-redux";
 import { showNewUserDialog } from "../actions/ui-actions";
 import { fetchUsers } from "../actions/user-actions";
 
-class users extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isNewUserDialogOpened: false,
-      user: {},
-      userList: []
-    };
-  }
-
+class Users extends Component {
   openNewUserDialog() {
     console.log("New user dialog opened", this.props.isNewUserDialogOpened);
-    //this.props.showNewUserDialog(true);
+    this.props.showNewUserDialog(true);
+  }
+
+  componentWillMount() {
     this.props.fetchUsers();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      this.props.userList.unshift(nextProps.user);
+    }
   }
 
   render() {
@@ -40,7 +41,6 @@ class users extends Component {
           </button>
         </div>
         {this.props.isNewUserDialogOpened ? <NewUser /> : ""}
-        {this.props.user.name}
         {users}
         <br />
       </div>
@@ -48,11 +48,16 @@ class users extends Component {
   }
 }
 
+// Users.propTypes = {
+//   fetchUsers: PropTypes.func.isRequired,
+//   users: PropTypes.array.isRequired
+// };
+
 function mapStateToProps(state) {
   return {
     isNewUserDialogOpened: state.ui.isNewUserDialogOpened,
-    user: state.user.user,
-    userList: state.user.users
+    user: state.user.item,
+    userList: state.user.items
   };
 }
 
@@ -62,4 +67,4 @@ export default connect(
     showNewUserDialog,
     fetchUsers
   }
-)(users);
+)(Users);
