@@ -18,7 +18,26 @@ class users extends Component {
     this.props.showNewUserDialog(true);
   }
 
+  componentWillMount() {
+    //get users
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          userList: data
+        });
+      });
+  }
+
   render() {
+    const users = this.state.userList.map(user => {
+      return (
+        <div key={user.id}>
+          <p>{user.name}</p>
+        </div>
+      );
+    });
     return (
       <div>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -32,17 +51,19 @@ class users extends Component {
         </div>
         {this.props.isNewUserDialogOpened ? <NewUser /> : ""}
         {this.props.user.fname}
-        {this.props.userList}
+        {users}
+        <br />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  isNewUserDialogOpened: state.ui.isNewUserDialogOpened,
-  user: state.user.user,
-  userList: [...state.user.user]
-});
+function mapStateToProps(state) {
+  return {
+    isNewUserDialogOpened: state.ui.isNewUserDialogOpened,
+    user: state.user.user
+  };
+}
 
 export default connect(
   mapStateToProps,

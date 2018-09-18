@@ -24,6 +24,23 @@ class NewUser extends Component {
       lname: this.state.lname,
       email: this.state.email
     });
+
+    const user = {
+      name: this.state.fname + " " + this.state.lname,
+      email: this.state.email
+    };
+
+    fetch("https://jsonplaceholder.typicode.com/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(user)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
   }
 
   render() {
