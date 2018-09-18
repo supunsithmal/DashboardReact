@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NewUser from "./users/newuser";
 import { connect } from "react-redux";
 import { showNewUserDialog } from "../actions/ui-actions";
+import { fetchUsers } from "../actions/user-actions";
 
 class users extends Component {
   constructor(props) {
@@ -15,23 +16,12 @@ class users extends Component {
 
   openNewUserDialog() {
     console.log("New user dialog opened", this.props.isNewUserDialogOpened);
-    this.props.showNewUserDialog(true);
-  }
-
-  componentWillMount() {
-    //get users
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({
-          userList: data
-        });
-      });
+    //this.props.showNewUserDialog(true);
+    this.props.fetchUsers();
   }
 
   render() {
-    const users = this.state.userList.map(user => {
+    const users = this.props.userList.map(user => {
       return (
         <div key={user.id}>
           <p>{user.name}</p>
@@ -50,7 +40,7 @@ class users extends Component {
           </button>
         </div>
         {this.props.isNewUserDialogOpened ? <NewUser /> : ""}
-        {this.props.user.fname}
+        {this.props.user.name}
         {users}
         <br />
       </div>
@@ -61,11 +51,15 @@ class users extends Component {
 function mapStateToProps(state) {
   return {
     isNewUserDialogOpened: state.ui.isNewUserDialogOpened,
-    user: state.user.user
+    user: state.user.user,
+    userList: state.user.users
   };
 }
 
 export default connect(
   mapStateToProps,
-  { showNewUserDialog }
+  {
+    showNewUserDialog,
+    fetchUsers
+  }
 )(users);

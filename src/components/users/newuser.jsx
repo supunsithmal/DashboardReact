@@ -7,8 +7,8 @@ class NewUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: "",
-      lname: "",
+      name: "",
+      phone: "",
       email: ""
     };
   }
@@ -20,13 +20,14 @@ class NewUser extends Component {
 
   saveUserDetails() {
     this.props.addUser({
-      fname: this.state.fname,
-      lname: this.state.lname,
+      name: this.state.name,
+      phone: this.state.phone,
       email: this.state.email
     });
 
     const user = {
-      name: this.state.fname + " " + this.state.lname,
+      name: this.state.name,
+      phone: this.state.phone,
       email: this.state.email
     };
 
@@ -67,24 +68,24 @@ class NewUser extends Component {
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <label htmlFor="firstname">First name:</label>
+                <label htmlFor="firstname">Name:</label>
                 <input
                   type="text"
                   id="firstname"
                   className="form-control"
                   onChange={event =>
-                    this.setState({ fname: event.target.value })
+                    this.setState({ name: event.target.value })
                   }
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="lastname">Last name:</label>
+                <label htmlFor="phone">Phone:</label>
                 <input
                   type="text"
-                  id="lastname"
+                  id="phone"
                   className="form-control"
                   onChange={event =>
-                    this.setState({ lname: event.target.value })
+                    this.setState({ phone: event.target.value })
                   }
                 />
               </div>
