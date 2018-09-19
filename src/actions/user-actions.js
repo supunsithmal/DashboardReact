@@ -1,31 +1,20 @@
-import { ADD_NEW_USER, FETCH_USERS } from "../constants/types";
+import {
+  GET_USER_LIST,
+  CREATE_USER,
+  CREATE_USER_FULFILLED
+} from "../constants/userActionTypes";
+import API from "../services/API";
 
-export const addUser = user => dispatch => {
-  fetch("https://jsonplaceholder.typicode.com/users", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(user)
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("Dispatching created user", data);
-      dispatch({
-        type: ADD_NEW_USER,
-        payload: data.user
-      });
-    });
-};
+export function addUser(user) {
+  return {
+    type: CREATE_USER,
+    payload: API.post("/users", user)
+  };
+}
 
-export const fetchUsers = () => dispatch => {
-  fetch("https://jsonplaceholder.typicode.com/users")
-    .then(res => res.json())
-    .then(data => {
-      console.log("Dispatching users");
-      dispatch({
-        type: FETCH_USERS,
-        payload: data
-      });
-    });
-};
+export function fetchUsers() {
+  return {
+    type: GET_USER_LIST,
+    payload: API.get("/users")
+  };
+}

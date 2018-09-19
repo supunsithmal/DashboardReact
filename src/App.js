@@ -8,18 +8,13 @@ import Settings from "./components/settings";
 import Records from "./components/records";
 import SideNav from "./components/sidenav/sidenav";
 import store from "./store/store";
-
-function reducer() {
-  return {
-    isNewUserDialogOpened: false
-  };
-}
+import configureStore from "./store/store";
 
 class App extends Component {
   state = {};
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={configureStore()}>
         <div>
           <Header />
           <div className="row container-fluid">

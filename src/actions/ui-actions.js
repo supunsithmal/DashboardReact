@@ -1,10 +1,8 @@
 import { SHOW_NEW_USER_ALERT } from "../constants/types";
 
-export const showNewUserDialog = isOpen => dispatch => {
-  console.log("Show New User", isOpen);
-
-  dispatch({
+export function showNewUserDialog(isOpen) {
+  return {
     type: SHOW_NEW_USER_ALERT,
     payload: isOpen
-  });
-};
+  };
+}

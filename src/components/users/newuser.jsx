@@ -4,8 +4,13 @@ import { showNewUserDialog } from "../../actions/ui-actions";
 import { addUser } from "../../actions/user-actions";
 
 class NewUser extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   dismissDialog() {
-    console.log("Dismissing dialog");
+    console.log("Dismissing dialog", this.state.name);
     this.props.showNewUserDialog(false);
   }
 
